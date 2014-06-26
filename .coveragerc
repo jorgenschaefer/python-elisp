@@ -1,0 +1,9 @@
+[run]
+source = elisp
+branch = True
+
+[report]
+omit =
+    elisp/tests/*
+    elisp/compat.py
+    elisp/parser.py

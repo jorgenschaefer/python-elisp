@@ -1,0 +1,7 @@
+*.pyc
+.tox
+.coverage
+MANIFEST
+dist/
+build/
+elisp.egg-info/

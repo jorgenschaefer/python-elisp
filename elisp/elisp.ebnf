@@ -1,0 +1,29 @@
+file = @:{expression}* $;
+
+expression = list | vector
+           | integer | float | symbol | string;
+
+integer = ?/[+-]?[0-9]+\.?/? !symbol;
+
+float = ?/[+-]?[0-9]*\.[0-9]+e[0-9]+/?
+      | ?/[+-]?[0-9]+e[0-9]+/?
+      | ?/[+-]?[0-9]*\.[0-9]+/?
+      ;
+
+(* Character syntax not supported *)
+
+symbol = ?/([-+=*/_~!@$%^&:<>{}?A-Za-z0-9]+|\\.)+/?;
+
+list = proper_list | improper_list;
+proper_list = '(' @+:{expression}* ')';
+improper_list = '(' @:({expression}+ '.' expression) ')';
+
+(* Does not support the complex \C-a syntax *)
+string = '"' @:?/([^"]|\n)*|(\\(.|\n))/?  '"';
+
+vector = '[' @+:{expression}* ']';
+
+(* Char-Table not supported *)
+(* Bool-Vector not supported *)
+(* Hash Table not supported *)
+(* Byte-Code not supported *)
