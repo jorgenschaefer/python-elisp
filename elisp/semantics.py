@@ -11,6 +11,10 @@ def loads(data):
 
 
 class ELispSemantics(object):
+    def quote(self, ast):
+        quote = types.ELispSymbol("quote")
+        return types.ELispCons.from_list([quote, ast])
+
     def integer(self, ast):
         return int(ast.rstrip("."))
 

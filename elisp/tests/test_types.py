@@ -25,6 +25,12 @@ class TestELispSymbol(unittest.TestCase):
 
 
 class TestELispCons(unittest.TestCase):
+    def test_repr(self):
+        cell = types.ELispCons("car", "cdr")
+        actual = repr(cell)
+
+        self.assertEqual("ELispCons('car', 'cdr')", actual)
+
     def test_should_have_car_and_cdr(self):
         cell = types.ELispCons("car", "cdr")
 
@@ -44,6 +50,12 @@ class TestELispCons(unittest.TestCase):
         self.assertEqual(0, list_.car)
         self.assertEqual(1, list_.cdr.car)
         self.assertEqual(2, list_.cdr.cdr)
+
+    def test_should_know_equality(self):
+        cell1 = types.ELispCons(1, 2)
+        cell2 = types.ELispCons(1, 2)
+
+        self.assertEqual(cell1, cell2)
 
 
 class TestELispString(unittest.TestCase):

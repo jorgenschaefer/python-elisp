@@ -19,6 +19,17 @@ class TestComment(LoadsTestCase):
         self.t("23 ; This is a comment", 23)
 
 
+class TestQuote(LoadsTestCase):
+    def test_simple_expression(self):
+        expected = types.ELispCons.from_list(["quote", 23])
+        self.t("'23", expected)
+
+    def test_complex_expression(self):
+        inner = types.ELispCons.from_list([1, 2, 3])
+        expected = types.ELispCons.from_list(["quote", inner])
+        self.t("'(1 2 3)", expected)
+
+
 class TestInteger(LoadsTestCase):
     def test(self):
         self.t("-1", -1)
@@ -81,6 +92,11 @@ class TestCons(LoadsTestCase):
         self.assertEqual("A", obj.car.car)
         self.assertEqual("B", obj.car.cdr.car)
         self.assertEqual("C", obj.car.cdr.cdr.car)
+
+        obj = semantics.loads("(1 2 3)")[0]
+        self.assertEqual(1, obj.car)
+        self.assertEqual(2, obj.cdr.car)
+        self.assertEqual(3, obj.cdr.cdr.car)
 
     def test_should_parse_incomplete_list(self):
         obj = semantics.loads("(A . B)")[0]

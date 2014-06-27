@@ -16,7 +16,7 @@ from grako.parsing import graken, Parser
 from grako.exceptions import *  # noqa
 
 
-__version__ = '2014.06.27.21.02.28.04'
+__version__ = '2014.06.27.21.33.30.04'
 
 __all__ = [
     'elispParser',
@@ -47,6 +47,8 @@ class elispParser(Parser):
             with self._option():
                 self._vector_()
             with self._option():
+                self._quote_()
+            with self._option():
                 self._integer_()
             with self._option():
                 self._float_()
@@ -57,27 +59,25 @@ class elispParser(Parser):
             self._error('no available options')
 
     @graken()
+    def _quote_(self):
+        self._token("'")
+        self._expression_()
+        self.ast['@'] = self.last_node
+
+    @graken()
     def _integer_(self):
-        self._pattern(r'[+-]?[0-9]+\.?')
-        with self._ifnot():
-            self._symbol_()
+        self._pattern(r'[+-]?[0-9]+\.?(?=(\s|["()]|$))')
 
     @graken()
     def _float_(self):
         with self._choice():
             with self._option():
-                self._pattern(r'[+-]?[0-9]*\.[0-9]+e[0-9]+')
-                with self._ifnot():
-                    self._symbol_()
+                self._pattern(r'[+-]?[0-9]*\.[0-9]+e[0-9]+(?=(\s|["()]|$))')
             with self._option():
-                self._pattern(r'[+-]?[0-9]+e[0-9]+')
-                with self._ifnot():
-                    self._symbol_()
+                self._pattern(r'[+-]?[0-9]+e[0-9]+(?=(\s|["()]|$))')
             with self._option():
-                self._pattern(r'[+-]?[0-9]*\.[0-9]+')
-                with self._ifnot():
-                    self._symbol_()
-            self._error('no available options')
+                self._pattern(r'[+-]?[0-9]*\.[0-9]+(?=(\s|["()]|$))')
+            self._error('expecting one of: [+-]?[0-9]*\\.[0-9]+(?=(\\s|["()]|$)) [+-]?[0-9]*\\.[0-9]+e[0-9]+(?=(\\s|["()]|$)) [+-]?[0-9]+e[0-9]+(?=(\\s|["()]|$))')
 
     @graken()
     def _symbol_(self):
@@ -144,6 +144,9 @@ class elispSemantics(object):
         return ast
 
     def expression(self, ast):
+        return ast
+
+    def quote(self, ast):
         return ast
 
     def integer(self, ast):

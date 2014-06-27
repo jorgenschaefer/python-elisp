@@ -34,6 +34,13 @@ class ELispCons(object):
             result = cls(elt, result)
         return result
 
+    def __eq__(self, other):
+        return self.car == other.car and self.cdr == other.cdr
+
+    def __repr__(self):
+        return "ELispCons({}, {})".format(repr(self.car),
+                                          repr(self.cdr))
+
 
 class ELispString(object):
     @classmethod
