@@ -35,6 +35,9 @@ class TestELispNIL(unittest.TestCase):
         self.assertIs(types.NIL.car, types.NIL)
         self.assertIs(types.NIL.cdr, types.NIL)
 
+    def test_should_be_false(self):
+        self.assertFalse(types.NIL)
+
 
 class TestELispCons(unittest.TestCase):
     def test_repr(self):

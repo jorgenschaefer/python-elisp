@@ -54,6 +54,15 @@ class ELispNil(ELispSymbol):
     def cdr(self):
         return self
 
+    def __nonzero__(self):
+        return False
+
+    def __bool__(self):
+        return False
+
+    def __getitem__(self, key):
+        return self
+
 
 NIL = ELispNil()
 
