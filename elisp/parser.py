@@ -16,7 +16,7 @@ from grako.parsing import graken, Parser
 from grako.exceptions import *  # noqa
 
 
-__version__ = '2014.06.26.22.00.54.03'
+__version__ = '2014.06.27.21.02.28.04'
 
 __all__ = [
     'elispParser',
@@ -67,15 +67,26 @@ class elispParser(Parser):
         with self._choice():
             with self._option():
                 self._pattern(r'[+-]?[0-9]*\.[0-9]+e[0-9]+')
+                with self._ifnot():
+                    self._symbol_()
             with self._option():
                 self._pattern(r'[+-]?[0-9]+e[0-9]+')
+                with self._ifnot():
+                    self._symbol_()
             with self._option():
                 self._pattern(r'[+-]?[0-9]*\.[0-9]+')
-            self._error('expecting one of: [+-]?[0-9]*\\.[0-9]+ [+-]?[0-9]*\\.[0-9]+e[0-9]+ [+-]?[0-9]+e[0-9]+')
+                with self._ifnot():
+                    self._symbol_()
+            self._error('no available options')
 
     @graken()
     def _symbol_(self):
-        self._pattern(r'([-+=*/_~!@$%^&:<>{}?A-Za-z0-9]+|\\.)+')
+        with self._choice():
+            with self._option():
+                self._pattern(r'([-+=*/_~!@$%^&:<>{}?A-Za-z0-9.]+|\\.){2,}')
+            with self._option():
+                self._pattern(r'([-+=*/_~!@$%^&:<>{}?A-Za-z0-9]+|\\.)')
+            self._error('expecting one of: ([-+=*/_~!@$%^&:<>{}?A-Za-z0-9.]+|\\\\.){2,} ([-+=*/_~!@$%^&:<>{}?A-Za-z0-9]+|\\\\.)')
 
     @graken()
     def _list_(self):

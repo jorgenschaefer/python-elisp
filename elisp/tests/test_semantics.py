@@ -50,6 +50,11 @@ class TestSymbol(LoadsTestCase):
     def test_should_parse_keyword(self):
         self.t(":foo")
 
+    def test_should_parse_symbols_with_dots(self):
+        self.t("foo/bar.frob", "foo/bar.frob")
+        self.t(".0000a", ".0000a")
+        self.t("100a.", "100a.")
+
 
 class TestCons(LoadsTestCase):
     def test_should_parse_list(self):
