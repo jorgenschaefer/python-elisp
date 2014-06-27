@@ -24,6 +24,18 @@ class TestELispSymbol(unittest.TestCase):
         self.assertIs(sym1, sym2)
 
 
+class TestELispNIL(unittest.TestCase):
+    def test_should_be_a_symbol(self):
+        nil = types.ELispSymbol("nil")
+
+        self.assertIs(types.NIL, nil)
+        self.assertIsInstance(types.NIL, types.ELispSymbol)
+
+    def test_should_have_self_referencing_car_and_cdr(self):
+        self.assertIs(types.NIL.car, types.NIL)
+        self.assertIs(types.NIL.cdr, types.NIL)
+
+
 class TestELispCons(unittest.TestCase):
     def test_repr(self):
         cell = types.ELispCons("car", "cdr")

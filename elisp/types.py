@@ -19,17 +19,17 @@ class ELispSymbol(str):
         return cls(string.replace("\\", ""))
 
 
-NIL = ELispSymbol("nil")
-
-
 class ELispCons(object):
     def __init__(self, car, cdr):
         self.car = car
         self.cdr = cdr
 
     @classmethod
-    def from_list(cls, list_, tail=NIL):
-        result = tail
+    def from_list(cls, list_, tail=None):
+        if tail is None:
+            result = NIL
+        else:
+            result = tail
         for elt in reversed(list_):
             result = cls(elt, result)
         return result
@@ -40,6 +40,22 @@ class ELispCons(object):
     def __repr__(self):
         return "ELispCons({}, {})".format(repr(self.car),
                                           repr(self.cdr))
+
+
+class ELispNil(ELispSymbol):
+    def __new__(cls):
+        return super(ELispNil, cls).__new__(cls, "nil")
+
+    @property
+    def car(self):
+        return self
+
+    @property
+    def cdr(self):
+        return self
+
+
+NIL = ELispNil()
 
 
 class ELispString(object):
