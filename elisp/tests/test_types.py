@@ -38,6 +38,9 @@ class TestELispNIL(unittest.TestCase):
     def test_should_be_false(self):
         self.assertFalse(types.NIL)
 
+    def test_should_support_indeces(self):
+        self.assertIs(types.NIL[23], types.NIL)
+
 
 class TestELispCons(unittest.TestCase):
     def test_repr(self):
@@ -71,6 +74,13 @@ class TestELispCons(unittest.TestCase):
         cell2 = types.ELispCons(1, 2)
 
         self.assertEqual(cell1, cell2)
+
+    def test_should_know_indeces(self):
+        list_ = types.ELispCons.from_list([0, 1, 2])
+
+        self.assertEqual(0, list_[0])
+        self.assertEqual(1, list_[1])
+        self.assertEqual(2, list_[2])
 
 
 class TestELispString(unittest.TestCase):

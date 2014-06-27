@@ -41,6 +41,12 @@ class ELispCons(object):
         return "ELispCons({}, {})".format(repr(self.car),
                                           repr(self.cdr))
 
+    def __getitem__(self, key):
+        if key == 0:
+            return self.car
+        else:
+            return self.cdr[key - 1]
+
 
 class ELispNil(ELispSymbol):
     def __new__(cls):
