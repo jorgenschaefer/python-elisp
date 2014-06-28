@@ -13,7 +13,7 @@ setup(
     description="Emacs Lisp parser",
     long_description=long_description,
     url="https://github.com/jorgenschaefer/elisp",
-    license="LGPL",
+    license="GPL",
     author="Jorgen Schaefer",
     author_email="contact@jorgenschaefer.de",
     packages=["elisp"],
@@ -24,7 +24,7 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Emacs-Lisp",
         ("License :: OSI Approved :: "
-         "GNU Lesser General Public License v3 or later (LGPLv3+)")
+         "GNU General Public License v3 or later (GPLv3+)")
     ],
     install_requires=[
         "grako"
