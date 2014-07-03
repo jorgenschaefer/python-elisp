@@ -47,6 +47,15 @@ class ELispCons(object):
         else:
             return self.cdr[key - 1]
 
+    def __iter__(self):
+        this = self
+        while this != NIL:
+            yield this.car
+            this = this.cdr
+
+    def __len__(self):
+        return 1 + len(self.cdr)
+
 
 class ELispNil(ELispSymbol):
     def __new__(cls):
@@ -68,6 +77,12 @@ class ELispNil(ELispSymbol):
 
     def __getitem__(self, key):
         return self
+
+    def __iter__(self):
+        return iter([])
+
+    def __len__(self):
+        return 0
 
 
 NIL = ELispNil()

@@ -41,6 +41,16 @@ class TestELispNIL(unittest.TestCase):
     def test_should_support_indeces(self):
         self.assertIs(types.NIL[23], types.NIL)
 
+    def test_should_iterate(self):
+        actual = [x for x in types.NIL]
+
+        self.assertEqual([], actual)
+
+    def test_should_have_a_length(self):
+        actual = len(types.NIL)
+
+        self.assertEqual(0, actual)
+
 
 class TestELispCons(unittest.TestCase):
     def test_repr(self):
@@ -81,6 +91,16 @@ class TestELispCons(unittest.TestCase):
         self.assertEqual(0, list_[0])
         self.assertEqual(1, list_[1])
         self.assertEqual(2, list_[2])
+
+    def test_should_iterate(self):
+        actual = [x for x in types.ELispCons.from_list([0, 1, 2])]
+
+        self.assertEqual([0, 1, 2], actual)
+
+    def test_should_have_a_length(self):
+        actual = len(types.ELispCons.from_list([0, 1, 2]))
+
+        self.assertEqual(3, actual)
 
 
 class TestELispString(unittest.TestCase):
