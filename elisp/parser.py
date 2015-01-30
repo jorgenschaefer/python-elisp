@@ -16,7 +16,7 @@ from grako.parsing import graken, Parser
 from grako.exceptions import *  # noqa
 
 
-__version__ = '2014.06.27.21.33.30.04'
+__version__ = '2014.07.05.18.46.07.05'
 
 __all__ = [
     'elispParser',
@@ -124,7 +124,7 @@ class elispParser(Parser):
     @graken()
     def _string_(self):
         self._token('"')
-        self._pattern(r'([^"]|\n)*|(\\(.|\n))')
+        self._pattern(r'([^"\\]|\n|\\(.|\n))*')
         self.ast['@'] = self.last_node
         self._token('"')
 

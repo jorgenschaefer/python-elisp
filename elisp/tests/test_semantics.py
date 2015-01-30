@@ -161,6 +161,13 @@ but the newline is ignored if escaped.'''
         # \d = 127
         self.t(r'"\d"', u"\x7f")
 
+    def test_should_handle_escaped_quotes(self):
+        self.t('"Hello, \\"World\\"!"', 'Hello, \\"World\\"!')
+        self.t('("Hello, \\"World\\"!" "second")',
+               types.ELispCons.from_list(['Hello, \\"World\\"!',
+                                          "second"]))
+
+
 
 class TestVector(LoadsTestCase):
     def test(self):

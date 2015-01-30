@@ -54,7 +54,14 @@ class ELispCons(object):
             this = this.cdr
 
     def __len__(self):
-        return 1 + len(self.cdr)
+        result = 0
+        this = self
+        while isinstance(this, ELispCons):
+            result += 1
+            this = this.cdr
+        if not isinstance(this, ELispNil):
+            raise RuntimeError("Improper list has no length")
+        return result
 
 
 class ELispNil(ELispSymbol):

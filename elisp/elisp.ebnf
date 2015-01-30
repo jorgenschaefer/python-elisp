@@ -23,7 +23,7 @@ proper_list = '(' @+:{expression}* ')';
 improper_list = '(' @:({expression}+ '.' expression) ')';
 
 (* Does not support the complex \C-a syntax *)
-string = '"' @:?/([^"]|\n)*|(\\(.|\n))/?  '"';
+string = '"' @:?/([^"\\]|\n|\\(.|\n))*/?  '"';
 
 vector = '[' @+:{expression}* ']';
 
